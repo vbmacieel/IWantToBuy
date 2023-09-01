@@ -1,0 +1,40 @@
+@using IWantToBuy.Models.Enum
+@model Product
+@{
+    var product = Model;
+    ViewData["Title"] = $"You want to delete {product.Name}";
+}
+<div class="row pb-2">
+    <h3 class="display-3">@ViewData["Title"]</h3>
+</div>
+<div class="border p-2">
+    <form method="post">
+        <div class="mb-3">
+            <b>@Html.LabelFor(model => model.Name)</b>
+            <p>@Model.Name</p>
+        </div>
+        <div class="mb-3">
+            <b>@Html.LabelFor(model => model.ProductUrl)</b>
+            <p><a href="@Model.ProductUrl">@Model.ProductUrl</a></p>
+        </div>
+        <div class="mb-3">
+            <b>@Html.LabelFor(model => model.Price)</b>
+            <p>R$@Model.Price</p>
+        </div>
+        <div class="mb-3">
+            @switch (product.Category)
+            {
+                case Category.Important : <h5><span class="badge bg-warning">@product.Category</span></h5>
+                break;
+                case Category.WantToBuy : <h5><span class="badge bg-success">@product.Category</span></h5>
+                break;
+                case Category.Unecessary : <h5><span class="badge bg-secondary">@product.Category</span></h5>
+                break;
+            }
+        </div>
+        <button type="submit" class="btn btn-danger" style="width:150px">Delete</button>
+        <a asp-controller="Product" asp-action="Index" class="btn btn-primary" style="width:150px">
+            Back to List
+        </a>
+    </form>
+</div>

@@ -1,0 +1,49 @@
+@using IWantToBuy.Models.Enum
+@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "Products";
+}
+
+<h3 class="display-3">@ViewData["Title"]</h3>
+<a asp-controller="Product" asp-action="Create" class="btn btn-success">
+    Save new product
+</a>
+<div class="container">
+    <div class="row">
+
+        @foreach (var product in Model)
+        {   
+            <div class="col-md-4">
+                <div class="card mt-3" style="width: 18rem;">
+                    <div class="d-flex justify-content-center p-3">
+                        <img class="card-img-top" src="@product.ImageUrl" style="width: 50%;" alt="@product.Name">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="@product.ProductUrl">@product.Name</a></h5>
+                        <h6 class="card-subtitle mb-2 text-muted">R$@product.Price</h6>
+                    
+                        @switch (product.Category)
+                        {
+                            case Category.Important : <h5><span class="badge bg-warning">@product.Category</span></h5>
+                            break;
+                            case Category.WantToBuy : <h5><span class="badge bg-success">@product.Category</span></h5>
+                            break;
+                            case Category.Unecessary : <h5><span class="badge bg-secondary">@product.Category</span></h5>
+                            break;
+                        }
+
+                        <div class="btn-group d-flex">
+                            <a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-danger">
+                                Delete
+                            </a>
+                            <a asp-controller="Product" asp-action="Detail" asp-route-id="@product.Id" class="btn btn-primary">
+                                Detail
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>    
+        }
+
+    </div>
+</div>
